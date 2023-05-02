@@ -1,5 +1,6 @@
 package com.skypro.shelteranimaltgbot.service;
 
+import com.pengrad.telegrambot.model.CallbackQuery;
 import com.pengrad.telegrambot.model.request.*;
 
 import com.skypro.shelteranimaltgbot.model.Pet;
@@ -126,28 +127,6 @@ public class ButtonService {
 ////                .addRow(new InlineKeyboardButton(DOCUMENTS.getCommandText()).callbackData(DOCUMENTS.getCommandText()));
 //    }
 
-    public Keyboard takeCatMenu() {
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        inlineKeyboardMarkup.addRow(
-                new InlineKeyboardButton(RULES_OF_ACQUAINTANCE.getCommandText())
-                        .callbackData(RULES_OF_ACQUAINTANCE.getCommandText())
-        );
-        inlineKeyboardMarkup.addRow(
-                new InlineKeyboardButton(TRANSPORT_RECOMMENDATIONS.getCommandText())
-                        .callbackData(TRANSPORT_RECOMMENDATIONS.getCommandText())
-
-        );
-        inlineKeyboardMarkup.addRow(
-                new InlineKeyboardButton(RECOMMENDATIONS_FOR_KID_HOUSE.getCommandText())
-                        .callbackData(RECOMMENDATIONS_FOR_KID_HOUSE.getCommandText())
-        );
-        inlineKeyboardMarkup.addRow(
-                new InlineKeyboardButton(RECOMMENDATIONS_FOR_ADULT_HOUSE.getCommandText())
-                        .callbackData(RECOMMENDATIONS_FOR_ADULT_HOUSE.getCommandText())
-        );
-        return inlineKeyboardMarkup;
-    }
-
 
     /**
      * кнопки получить рекомендации как взять кошку/собаку
@@ -159,4 +138,14 @@ public class ButtonService {
         return inlineKeyboardMarkup;
     }
 
+    /**
+     * кнопки Оформить или Назад
+     * */
+    public Keyboard designOrBack(CallbackQuery callbackQuery) {
+        String[] data = callbackQuery.data().split(" ");
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        inlineKeyboardMarkup.addRow(new InlineKeyboardButton("Оформить").callbackData("Design " + data[0] + " " + data[1] + " " + data[2]));
+        inlineKeyboardMarkup.addRow(new InlineKeyboardButton("Назад").callbackData("Back"));
+        return inlineKeyboardMarkup;
+    }
 }
