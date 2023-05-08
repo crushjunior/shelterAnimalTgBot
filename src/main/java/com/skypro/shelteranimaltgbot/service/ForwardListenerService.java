@@ -32,8 +32,9 @@ public class ForwardListenerService {
                 handlerMessageDataService.handlerMessageData(update, messages);
             }
         } catch (NullPointerException e) {
-            logger.info("не обрабатываемые данные.. ");
-            e.getMessage();
+            logger.info(e.getMessage());
+//            logger.info("не обрабатываемые данные.. ");
+//            e.getMessage();
         }
         return messages;
     }

@@ -56,6 +56,11 @@ public class User {
      */
     private RoleEnum role;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
+
+
     public User() {
     }
 
@@ -78,6 +83,14 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
     }
 
     public String getFirstName() {

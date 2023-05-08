@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Long> {
-
+    Report findByUserTelegramId(Long chatId);
 }

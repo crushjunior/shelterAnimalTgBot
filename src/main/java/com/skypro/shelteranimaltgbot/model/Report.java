@@ -6,6 +6,7 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -30,7 +31,7 @@ public class Report {
     /**
      * Фотография в отчете
      */
-    private String photo;
+    private byte[] photo;
 
     /**
      * Рацион питания домашнего питомца
@@ -72,7 +73,7 @@ public class Report {
 //    @ManyToOne
 //    @JoinColumn(name = "pet")
 //    private Pet pet;
-    public Report(Long userTelegramId, String photo, String diet,
+    public Report(Long userTelegramId, byte[] photo, String diet,
                   String petInfo, String changeInPetBehavior) {
         this.userTelegramId = userTelegramId;
         this.photo = photo;
@@ -98,11 +99,11 @@ public class Report {
         this.userTelegramId = userTelegramId;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
@@ -155,15 +156,14 @@ public class Report {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Report report = (Report) o;
-        return Objects.equals(id, report.id) && Objects.equals(userTelegramId, report.userTelegramId)
-                && Objects.equals(photo, report.photo) && Objects.equals(diet, report.diet)
-                && Objects.equals(petInfo, report.petInfo) && Objects.equals(changeInPetBehavior, report.changeInPetBehavior)
-                && Objects.equals(date, report.date) && reportStatus == report.reportStatus;
+        return Objects.equals(id, report.id) && Objects.equals(userTelegramId, report.userTelegramId) && Arrays.equals(photo, report.photo) && Objects.equals(diet, report.diet) && Objects.equals(petInfo, report.petInfo) && Objects.equals(changeInPetBehavior, report.changeInPetBehavior) && date.equals(report.date) && Objects.equals(adoption, report.adoption) && reportStatus == report.reportStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userTelegramId, photo, diet, petInfo, changeInPetBehavior, date, reportStatus);
+        int result = Objects.hash(id, userTelegramId, diet, petInfo, changeInPetBehavior, date, adoption, reportStatus);
+        result = 31 * result + Arrays.hashCode(photo);
+        return result;
     }
 
     @Override
@@ -171,11 +171,12 @@ public class Report {
         return "Report{" +
                 "id=" + id +
                 ", userTelegramId=" + userTelegramId +
-                ", photo='" + photo + '\'' +
+                ", photo=" + Arrays.toString(photo) +
                 ", diet='" + diet + '\'' +
                 ", petInfo='" + petInfo + '\'' +
                 ", changeInPetBehavior='" + changeInPetBehavior + '\'' +
                 ", date=" + date +
+                ", adoption=" + adoption +
                 ", reportStatus=" + reportStatus +
                 '}';
     }

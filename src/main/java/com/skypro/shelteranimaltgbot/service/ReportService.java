@@ -23,7 +23,7 @@ public class ReportService {
         return reportRepository.save(report);
     }
 
-    public Report saveReport(Long userTelegramId, String photo, String diet,
+    public Report saveReport(Long userTelegramId, byte[] photo, String diet,
                              String petInfo, String changeInPetBehavior) {
         logger.info("Вызван метод сохранения отчета в БД");
         Report report = new Report();
@@ -32,6 +32,7 @@ public class ReportService {
         report.setDiet(diet);
         report.setPetInfo(petInfo);
         report.setChangeInPetBehavior(changeInPetBehavior);
+        report.setReportStatus(ReportStatus.ACCEPTED);
 
         return reportRepository.save(report);
     }
@@ -40,6 +41,11 @@ public class ReportService {
     public Report findReport(Long id) {
         logger.info("Вызван метод поиска отчета в БД {}", id);
         return reportRepository.findById(id).orElseThrow();
+    }
+
+    public Report findReportByChatId(Long chatId) {
+        logger.info("Вызван метод поиска отчета в БД {} по чат айди пользователя");
+        return reportRepository.findByUserTelegramId(chatId);
     }
 
     public Report updateReport(Report report, ReportStatus reportStatus) {
